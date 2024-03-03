@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" 
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+    <style>
+            .list-group-item a {
+            text-decoration: none;
+            color: black;
+        }
+
+    </style>
+
+</head>
+<!--
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Detector</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+        <li class="nav-item active">
+            <a class="nav-link" href="#">Dashboard<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">About</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">Contact</a>
+        </li>
+        </ul>
+    </div>
+</nav>
+--->
+
+
+<body class="m-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2">
+                <div class="card">
+                    <div class="card-header">
+                      Select object to detect
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                           <a href="{% url 'detection' %}">All</a>
+                        </li>
+                        {% for category in categories %}
+                        <li class="list-group-item">
+                            <a href="{% url 'detection' %}?category={{category.name}}">{{category.name}}</a>
+                        </li>
+                        {% endfor %}
+                        <a href="{% url 'dashboard' %}" class="btn btn-dark btn-block btn-sm m-1">Home page</a>
+                        <!--
+                      <li class="list-group-item">Honey bees</li>
+                      <li class="list-group-item">Comb contents</li>
+                      <li class="list-group-item">Custom (requires configs and weights)</li>
+                        -->
+                    </ul>
+                  </div>
+            </div>
+            <div class="col-md-5">
+                <div class="row">
+                    <div class="card text-center">
+                        <div class="card-header">
+                          <ul class="nav nav-pills card-header-pills">
+                            {% if photos %}
+                            <li class="nav-item">
+                              <a class="nav-link active" href="{% url 'selectFiles' %}">Run detection</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'addphoto' %}">Add photos</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'deletephoto' %}">Delete photos</a>
+                            </li>
+                            {% else %}
+                            <li class="nav-item">
+                              <a class="nav-link disabled" href="">Run detection</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'addphoto' %}">Add photos</a>
+                            </li>
+                            {% endif %}
+                          </ul>
+                        </div>
+                        {% if photos %}
+                        <div class="card-body">
+                            {% for photo in photos %}
+                            <div class="list-group">
+                                <a href="{% url 'photo' photo.id %}" class="list-group-item list-group-item-action">{{photo.image}}</a>
+                                
+                              </div>
+                            {% endfor %}
+                        </div>
+                            
+                        {% else %}
+                        <div class="card-body">
+                            <h5 class="card-title">No photos to process</h5>
+                            <p class="card-text">Photos that need to be processed will display here</p>
+                            <a href="{% url 'addphoto' %}" class="btn btn-primary">Upload photos</a>
+                        </div>
+                        {% endif %}
+                      </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-4">
+                <div class="row">
+                    <div class="card text-center">
+                        <div class="card-header">
+                          <ul class="nav nav-pills card-header-pills">
+                            {% if configs %}
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'addconfig' %}">Add config</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'deleteconfig' %}">Delete config</a>
+                            </li>
+                            {% else %}
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'addconfig' %}">Add config</a>
+                            </li>
+                            {% endif %}
+                          </ul>
+                        </div>
+                        {% if configs %}
+                        <div class="card-body">
+                            {% for config in configs %}
+                            <div class="list-group">
+                                <a href="{% url 'config' config.id %}" class="list-group-item list-group-item-action">{{config.file}}</a>
+                                
+                              </div>
+                            {% endfor %}
+                        </div>
+                            
+                        {% else %}
+                        <div class="card-body">
+                            <h5 class="card-title">No configs added</h5>
+                            <p class="card-text">Config files will display here</p>
+                            <a href="{% url 'addconfig' %}" class="btn btn-primary">Upload configs</a>
+                        </div>
+                        {% endif %}
+                      </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>
