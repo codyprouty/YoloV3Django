@@ -1,4 +1,4 @@
-# YoloV3Django
+# Yolo V3 object detection in a website made in Django (Python)
 A website made in django that allows for static counting of defined objects using Yolo V3. A trained model must be provided.
 
 Host the website either locally or through a website, select the images you want to detect and the names, cfg, and weights file for the object you are looking for, and you will receive a csv with the number of objects detected in each image. 
